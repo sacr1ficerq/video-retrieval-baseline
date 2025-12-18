@@ -60,7 +60,7 @@ def evaluate_retrieval(video_embeddings, text_embeddings, k_values=[1, 5, 10],
     metrics = {**recalls, "MedR": median_rank}
 
     if advanced:
-        from advanced_metrics import compute_advanced_metrics
+        from .advanced_metrics import compute_advanced_metrics
         adv_metrics = compute_advanced_metrics(distances, indices, k_values)
         metrics.update(adv_metrics)
 

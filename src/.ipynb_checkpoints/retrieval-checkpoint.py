@@ -49,12 +49,19 @@ def compute_median_rank(indices):
     return np.median(ranks)
 
 
-def evaluate_retrieval(video_embeddings, text_embeddings, k_values=[1, 5, 10]):
+def evaluate_retrieval(video_embeddings, text_embeddings, k_values=[1, 5, 10], 
+                       advanced=False):
     index = build_faiss_index(video_embeddings)
-    _, indices = search_videos(index, text_embeddings, k=max(k_values))
+    distances, indices = search_videos(index, text_embeddings, k=max(k_values))
 
     recalls = compute_recall_at_k(indices, k_values)
     median_rank = compute_median_rank(indices)
 
     metrics = {**recalls, "MedR": median_rank}
+
+    if advanced:
+        from .advanced_metrics import compute_advanced_metrics
+        adv_metrics = compute_advanced_metrics(distances, indices, k_values)
+        metrics.update(adv_metrics)
+
     return metrics
