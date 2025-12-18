@@ -2,5 +2,9 @@ data
 venv
 *.zip
 .ipynb_checkpoints
+clip/MSRVTT_videos/
+clip/YouCook2_videos/
+__pycache__
+vlm/VATEX_videos/
 
 
